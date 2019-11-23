@@ -177,6 +177,40 @@
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
 
+/obj/structure/AIcore/proc/inhabit(var/playerKey)
+	if(locate(/mob/living/silicon/ai) in src)
+		return
+
+	var/mob/living/silicon/ai/AI = new(loc, base_law_type,,1)
+	AI.invisibility = 0
+	AI.key = playerKey //assign player ckey to AI
+
+	load_ai(AI)
+
+/obj/structure/AIcore/proc/load_ai(var/mob/living/silicon/ai/transfer, var/obj/item/aicard/card, var/mob/user)
+
+	if(!istype(transfer))
+		return
+	if(locate(/mob/living/silicon/ai) in src)
+		if(user)
+			to_chat(user, span("warning", "There is already an active AI in the AI core!"))
+		return
+
+	transfer.aiRestorePowerRoutine = 0
+	transfer.control_disabled = 0
+	transfer.aiRadio.disabledAi = 0
+	transfer.forceMove(get_turf(src))
+	transfer.create_eyeobj()
+	transfer.cancel_camera()
+	if(user)
+		to_chat(user, "<span class='notice'>Transfer successful:</span> [transfer.name] ([rand(1000,9999)].exe) downloaded to host terminal. Local copy wiped.")
+	to_chat(transfer, "You have been uploaded to a stationary terminal. Remote device connection restored.")
+
+	if(card)
+		card.clear()
+
+	qdel(src)
+
 /obj/structure/AIcore/deactivated
 	name = "inactive AI"
 	desc = "An empty AI core."
@@ -189,25 +223,6 @@
 	if(src in empty_playable_ai_cores)
 		empty_playable_ai_cores -= src
 	return ..()
-
-/obj/structure/AIcore/deactivated/proc/load_ai(var/mob/living/silicon/ai/transfer, var/obj/item/aicard/card, var/mob/user)
-
-	if(!istype(transfer) || locate(/mob/living/silicon/ai) in src)
-		return
-
-	transfer.aiRestorePowerRoutine = 0
-	transfer.control_disabled = 0
-	transfer.aiRadio.disabledAi = 0
-	transfer.forceMove(get_turf(src))
-	transfer.create_eyeobj()
-	transfer.cancel_camera()
-	to_chat(user, "<span class='notice'>Transfer successful:</span> [transfer.name] ([rand(1000,9999)].exe) downloaded to host terminal. Local copy wiped.")
-	to_chat(transfer, "You have been uploaded to a stationary terminal. Remote device connection restored.")
-
-	if(card)
-		card.clear()
-
-	qdel(src)
 
 /obj/structure/AIcore/deactivated/proc/check_malf(var/mob/living/silicon/ai/ai)
 	if(!ai) return
@@ -265,3 +280,21 @@
 	else
 		empty_playable_ai_cores += D
 		to_chat(src, "\The [id] is now <font color=\"#008000\">available</font> for latejoining AIs.")
+
+/obj/structure/AIcore/special
+	density = 1
+	anchored = 0
+	name = "Advanced Intelligence Housing"
+	desc = "A piece of advanced Skrell technology, the likes of which you have never seen."
+	icon = 'icons/mob/AI.dmi'
+	icon_state = "ai-empty"
+
+/obj/structure/AIcore/special/inhabit(var/playerKey)
+	if(locate(/mob/living/silicon/ai) in src)
+		return
+
+	var/mob/living/silicon/ai/special/AI = new(loc, base_law_type,,1)
+	AI.invisibility = 0
+	AI.key = playerKey //assign player ckey to AI
+
+	load_ai(AI)

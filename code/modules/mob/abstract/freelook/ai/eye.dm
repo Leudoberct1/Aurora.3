@@ -20,6 +20,13 @@
 		//Holopad
 		if(ai.holo && ai.hologram_follow)
 			ai.holo.move_hologram(ai)
+
+		if(istype(ai, /mob/living/silicon/ai/special))
+			var/mob/living/silicon/ai/special/sAI = ai
+			if(sAI.hologram)
+				var/obj/effect/overlay/hardlight/H = sAI.hologram
+				H.forceMove(get_turf(sAI.eyeobj))
+
 		return 1
 
 // AI MOVEMENT

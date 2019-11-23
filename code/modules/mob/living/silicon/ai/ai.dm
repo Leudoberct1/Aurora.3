@@ -819,5 +819,78 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/proc/has_power()
 	return (aiRestorePowerRoutine == 0)
 
+var/list/ai_verbs_special = list(
+	/mob/living/silicon/ai/proc/ai_announcement,
+	/mob/living/silicon/ai/proc/ai_call_shuttle,
+	/mob/living/silicon/ai/proc/ai_emergency_message,
+	/mob/living/silicon/ai/proc/ai_camera_track,
+	/mob/living/silicon/ai/proc/ai_camera_list,
+	/mob/living/silicon/ai/proc/ai_goto_location,
+	/mob/living/silicon/ai/proc/ai_remove_location,
+	/mob/living/silicon/ai/proc/ai_network_change,
+	/mob/living/silicon/ai/proc/ai_roster,
+	/mob/living/silicon/ai/proc/ai_statuschange,
+	/mob/living/silicon/ai/proc/ai_store_location,
+	/mob/living/silicon/ai/proc/ai_checklaws,
+	/mob/living/silicon/ai/proc/control_integrated_radio,
+	/mob/living/silicon/ai/proc/core,
+	/mob/living/silicon/ai/proc/pick_icon,
+	/mob/living/silicon/ai/proc/sensor_mode,
+	/mob/living/silicon/ai/proc/show_laws_verb,
+	/mob/living/silicon/ai/proc/toggle_acceleration,
+	/mob/living/silicon/ai/proc/toggle_camera_light,
+	/mob/living/silicon/ai/proc/ai_examine,
+	/mob/living/silicon/ai/proc/multitool_mode,
+	/mob/living/silicon/ai/special/proc/materialize
+)
+
+/mob/living/silicon/ai/special
+	name = "AI"
+	icon = 'icons/mob/AI.dmi'
+	icon_state = "speshul"
+	holo_icon = "speshul"
+	var/obj/effect/overlay/hardlight/hologram //holds our hologram
+	var/materialized = FALSE // Are we currently materialized?
+
+mob/living/silicon/ai/special/SetName()
+	..("Lyrii")
+
+mob/living/silicon/ai/special/add_ai_verbs()
+	src.verbs |= ai_verbs_special
+	src.verbs |= silicon_subsystems
+
+/mob/living/silicon/ai/special/remove_ai_verbs()
+	src.verbs -= ai_verbs_special
+	src.verbs -= silicon_subsystems
+
+/mob/living/silicon/ai/special/proc/materialize()
+	set name = "Materialize"
+	set category = "AI Commands"
+
+	if(!materialized)
+		make_projection(eyeobj.loc)
+	else
+		hologram.visible_message(span("notice", "[src] disappears!"))
+		hologram.Destroy()
+		qdel(hologram)
+
+	materialized = !materialized
+
+	return
+
+/mob/living/silicon/ai/special/proc/make_projection(turf/T)
+	hologram = new(T)
+	
+	hologram.name = "[src.name] (Hologram)"
+	hologram.owner = src
+
+	hologram.layer = FLY_LAYER
+	hologram.mouse_opacity = 0
+	hologram.anchored = 1
+	hologram.set_light(2, 1, LIGHT_COLOR_CYAN)
+
+	hologram.visible_message(span("notice", "[src] materializes before your eyes!"))
+	return TRUE
+
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO

@@ -115,3 +115,23 @@
 /obj/effect/overlay/temp/explosion/fast
 	icon_state = "explosionfast"
 	duration = 4
+
+/obj/effect/overlay/hardlight
+	icon = 'icons/mob/AI.dmi'
+	icon_state = "speshul"
+	var/mob/living/owner // to be able to pass messages onto them
+
+/obj/effect/overlay/hardlight/hear_talk(mob/living/M, text, verb, datum/language/speaking)
+	if(owner)
+		var/rendered
+		var/name_used = M.GetVoice()
+		if(speaking)
+			rendered = "<i><span class='game say'>Projection received, <span class='name'>[name_used]</span> [speaking.format_message(text, verb)]</span></i>"
+		else
+			rendered = "<i><span class='game say'>Projection received, <span class='name'>[name_used]</span> [verb], <span class='message'>\"[text]\"</span></span></i>"
+		owner.show_message(rendered, 2)
+
+/obj/effect/overlay/hardlight/see_emote(mob/living/M, text)
+	if(owner)
+		var/rendered = "<i><span class='game say'>Projection received, <span class='message'>[text]</span></span></i>"
+		owner.show_message(rendered, 2)

@@ -404,3 +404,25 @@
 		var/rendered = "<span class='message'>[msg]</span>"
 		pai.show_message(rendered, type)
 	..()
+
+/obj/item/device/paicard/proc/inhabit(var/playerKey)
+	if(pai)
+		if(!(pai.key = null))
+			return
+	pai = new(src)
+	pai.key = playerKey
+	pai.name = "Lyrii"
+
+/obj/item/device/paicard/special
+	name = "capsule"
+	desc = "A small, glowing rod housed within a light but durable container."
+	icon = 'icons/obj/pai.dmi'
+	icon_state = "speshul"
+
+/obj/item/device/paicard/special/Initialize()
+	. = ..()
+	cut_overlays()
+	SSpai.all_pai_devices -= src
+
+/obj/item/device/paicard/special/attack_self(mob/user)
+	return

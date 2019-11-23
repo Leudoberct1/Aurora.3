@@ -2496,6 +2496,7 @@
 #include "code\modules\vehicles\bike.dm"
 #include "code\modules\vehicles\cargo_train.dm"
 #include "code\modules\vehicles\droppod.dm"
+#include "code\modules\vehicles\hoverscooter.dm"
 #include "code\modules\vehicles\pussywagon.dm"
 #include "code\modules\vehicles\train.dm"
 #include "code\modules\vehicles\vehicle.dm"
