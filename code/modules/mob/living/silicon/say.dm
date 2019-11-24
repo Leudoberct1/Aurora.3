@@ -87,8 +87,46 @@
 
 	message = trim(message)
 
-	if (!message)
+	if(!message)
 		return
+	if(istype(src, /mob/living/silicon/ai/special))
+		var/mob/living/silicon/ai/special/AI = src
+		if(AI.materialized && AI.hologram)
+			if(speaking)
+				to_chat(AI, "<i><span class='game say'>Hardlight transmitted, <span class='name'>[real_name]</span> [speaking.format_message(message, verb)]</span></i>")
+			else
+				to_chat(AI, "<i><span class='game say'>Hardlight transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span></i>")
+
+			var/list/listening = list()
+			var/list/listening_obj = list()
+			var/turf/T = get_turf(AI.hologram)
+
+			if(T)
+				var/list/hear = hear(7, T)
+				var/list/hearturfs = list()
+
+				for(var/I in hear)
+					if(istype(I, /mob/))
+						var/mob/M = I
+						listening += M
+						hearturfs += M.locs[1]
+						for(var/obj/O in M.contents)
+							listening_obj |= O
+					else if(istype(I, /obj/))
+						var/obj/O = I
+						hearturfs += O.locs[1]
+						listening_obj |= O
+
+				for(var/mob/M in player_list)
+					if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS))
+						M.hear_say(message,verb,speaking,null,null, src)
+						continue
+					if(M.loc && M.locs[1] in hearturfs)
+						M.hear_say(message,verb,speaking,null,null, src)
+				return TRUE
+		else
+			to_chat(AI, "No hardlight projection. Use Materialize in the AI Commands menu.")
+			return FALSE
 
 	var/obj/machinery/hologram/holopad/H = src.holo
 	if(H && H.masters[src])//If there is a hologram and its master is the user.

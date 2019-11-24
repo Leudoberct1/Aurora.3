@@ -282,12 +282,12 @@
 		to_chat(src, "\The [id] is now <font color=\"#008000\">available</font> for latejoining AIs.")
 
 /obj/structure/AIcore/special
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = TRUE
 	name = "Advanced Intelligence Housing"
 	desc = "A piece of advanced Skrell technology, the likes of which you have never seen."
-	icon = 'icons/mob/AI.dmi'
-	icon_state = "ai-empty"
+	icon = 'icons/mob/bigAI.dmi'
+	icon_state = "ai_core"
 
 /obj/structure/AIcore/special/inhabit(var/playerKey)
 	if(locate(/mob/living/silicon/ai) in src)

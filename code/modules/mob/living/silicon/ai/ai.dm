@@ -846,9 +846,8 @@ var/list/ai_verbs_special = list(
 
 /mob/living/silicon/ai/special
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'
-	icon_state = "speshul"
-	holo_icon = "speshul"
+	icon = 'icons/mob/bigAI.dmi'
+	icon_state = "ai_core"
 	var/obj/effect/overlay/hardlight/hologram //holds our hologram
 	var/materialized = FALSE // Are we currently materialized?
 
@@ -886,7 +885,7 @@ mob/living/silicon/ai/special/add_ai_verbs()
 
 	hologram.layer = FLY_LAYER
 	hologram.mouse_opacity = 0
-	hologram.anchored = 1
+	hologram.anchored = TRUE
 	hologram.set_light(2, 1, LIGHT_COLOR_CYAN)
 
 	hologram.visible_message(span("notice", "[src] materializes before your eyes!"))

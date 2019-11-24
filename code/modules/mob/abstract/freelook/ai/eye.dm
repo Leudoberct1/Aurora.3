@@ -23,7 +23,7 @@
 
 		if(istype(ai, /mob/living/silicon/ai/special))
 			var/mob/living/silicon/ai/special/sAI = ai
-			if(sAI.hologram)
+			if(sAI.hologram && sAI.materialized)
 				var/obj/effect/overlay/hardlight/H = sAI.hologram
 				H.forceMove(get_turf(sAI.eyeobj))
 
