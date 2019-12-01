@@ -328,15 +328,16 @@
 
 //skrell helmets
 /obj/item/clothing/head/helmet/skrell
-    name = "jargon federation helmet"
-    desc = "A helmet developed and used by the jargon federation for its security forces. It consists of armored polymer and insulating material."
-    icon = 'icons/obj/skrell_items.dmi'
-    icon_state = "peacekeeper_helmet"
-    item_state = "peacekeeper_helmet"
-    item_flags = AIRTIGHT|THICKMATERIAL|BLOCK_GAS_SMOKE_EFFECT
-    contained_sprite = TRUE
-    body_parts_covered = HEAD|FACE|EYES
-    species_restricted = list("Skrell")
-    armor = list(melee = 60, bullet = 40, laser = 60, energy = 40, bomb = 40, bio = 0, rad = 0)
-    allow_hair_covering = TRUE
-    siemens_coefficient = 0.3
+	name = "jargon federation helmet"
+	desc = "A helmet developed and used by the Jargon Federation for its security forces. It consists of armored polymer and insulating material."
+	icon = 'icons/obj/skrell_items.dmi'
+	icon_state = "peacekeeper_helmet"
+	item_state = "peacekeeper_helmet"
+	item_flags = AIRTIGHT|THICKMATERIAL|BLOCK_GAS_SMOKE_EFFECT
+	contained_sprite = TRUE
+	body_parts_covered = HEAD|FACE|EYES
+	species_restricted = list("Skrell")
+	flash_protection = FLASH_PROTECTION_MAJOR
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 40, bomb = 40, bio = 0, rad = 0)
+	allow_hair_covering = TRUE
+	siemens_coefficient = 0.3

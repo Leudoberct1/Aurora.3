@@ -424,9 +424,9 @@
 	icon_state = "peacekeeper_gloves"
 	item_state = "peacekeeper_gloves"
 	attack_verb = list("punched")
-	armor = list(melee = 60, bullet = 40, laser = 60, energy = 40, bomb = 40, bio = 0, rad = 0)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 40, bomb = 40, bio = 0, rad = 0)
 	siemens_coefficient = 0
 	punch_damtype = HALLOSS
 	force = 5
 	punch_force = 25
-	contained_sprite = 1
+	contained_sprite = TRUE

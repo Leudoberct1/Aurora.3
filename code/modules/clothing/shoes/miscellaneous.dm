@@ -262,15 +262,15 @@
 
 //skrell shoes
 /obj/item/clothing/shoes/skrell/armored
-    name = "jargon armored boots"
-    desc = "Armored boots used by the jargon federation security forces. It consists of armored polymer and insulating material."
-    icon = 'icons/obj/skrell_items.dmi'
-    item_state = "peacekeeper_boots"
-    icon_state = "peacekeeper_boots"
-    contained_sprite = TRUE
-    force = 5
-    species_restricted = list("Skrell")
-    armor = list(melee = 80, bullet = 60, laser = 50, energy = 25, bomb = 50, bio = 10, rad = 0)
-    item_flags = NOSLIP
-    siemens_coefficient = 0.3
-    can_hold_knife = 1
+	name = "jargon armored boots"
+	desc = "Armored boots used by the Jargon Federation security forces. It consists of armored polymer and insulating material."
+	icon = 'icons/obj/skrell_items.dmi'
+	item_state = "peacekeeper_boots"
+	icon_state = "peacekeeper_boots"
+	contained_sprite = TRUE
+	force = 5
+	species_restricted = list("Skrell")
+	armor = list(melee = 80, bullet = 60, laser = 50, energy = 25, bomb = 50, bio = 10, rad = 0)
+	item_flags = NOSLIP
+	siemens_coefficient = 0.3
+	can_hold_knife = TRUE
